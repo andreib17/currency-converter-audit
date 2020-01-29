@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ public class CurrencyConverterAuditController {
     }
 
     @GetMapping("/transactions")
+    @PreAuthorize("hasAuthority('SCOPE_profile')")
     public ResponseEntity<List<ExchangeTransaction>> listTransactions(){
         return restTemplate
                 .exchange("http://currency-convert/transactions", HttpMethod.GET, null,
